@@ -17,11 +17,18 @@ gulp.task('test', function(){
   .pipe(mocha({reporter: 'nyan'}));
 });
 
-gulp.task('nodemon', function(){
+gulp.task('watch', () => {
+  gulp.watch(['**/*.js', '!node_modules/**'], ['lint'], ['test']);
   nodemon({
     script: 'server.js',
-    ext: 'js'
-  });
+    ext: 'html js'
+  })
+   .on('restart', () => {
+     console.log('restarting server');
+   });
 });
 
-gulp.task('default', ['lint', 'test']);
+
+
+
+gulp.task('default', ['lint', 'test', 'watch']);
